@@ -5,7 +5,9 @@ from rango import views
 urlpatterns = [
         url(r'^$', views.index, name='index'),
         url(r'^about/$', views.index_about, name='index_about'),
-        url(r'^new/$', views.index2, name='index2')]
+        url(r'^new/$', views.index2, name='index2'),
+        # слово + дефис + любое их количество до слеша /
+        url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.category, name='category')]
 
 # urlpatterns = [
 #     url(r'^admin/', admin.site.urls),
