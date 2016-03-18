@@ -3,6 +3,36 @@ from django.http import Http404
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Category, Page
+from .forms import CategoryForm
+
+
+def add_category(request):
+    # A HTTP POST?
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            # вернёт созданую модель после вызова
+
+            cat = form.save(commit=True)
+
+            # print(cat.name, cat.slug)
+            # Now call the index() view.
+            # The user will be shown the homepage.
+            # redirect("rango/")
+            return index(request)
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            print(form.errors)
+    else:
+        # If the request was not a POST, display the form to enter details.
+        form = CategoryForm()
+
+    # Bad form (or form details), no form supplied...
+    # Render the form with error messages (if any).
+    return render(request, 'rango/add_category.html', {'form': form})
 
 
 def category(request, category_name_slug):
