@@ -1,9 +1,39 @@
 
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import Category, Page
-from .forms import CategoryForm
+from .forms import CategoryForm, PageForm
+
+
+def add_page(request, category_name_slug):
+
+    try:
+        cat = Category.objects.get(slug=category_name_slug)
+    except Category.DoesNotExist:
+                # cat = None
+                return HttpResponse('This page does not exist! (You should pass existing url of category, but you pass '
+                                     + '<strong>' + category_name_slug + '</strong>)')
+
+    if request.method == 'POST':
+        form = PageForm(request.POST)
+        if form.is_valid():
+            if cat:
+                # объект не будет сохранён в базу данных
+                # будет только создан
+                page = form.save(commit=False)
+                page.category = cat
+                page.views = 0
+                page.save()
+                # probably better to use a redirect here.
+                return category(request, category_name_slug)
+        else:
+            print(form.errors)
+    else:
+        form = PageForm()
+
+    context_dict = {'form': form, 'category': cat}
+
+    return render(request, 'rango/add_page.html', context_dict)
 
 
 def add_category(request):
@@ -16,6 +46,7 @@ def add_category(request):
             # Save the new category to the database.
             # вернёт созданую модель после вызова
 
+            # здесь объект будет и создан и сохранён в базу, последющих save не потребуется
             cat = form.save(commit=True)
 
             # print(cat.name, cat.slug)

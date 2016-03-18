@@ -5,14 +5,20 @@ from .models import Page, Category
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Please enter the category name.")
+    # не будут верны в форме, их вообще по факту можно не трогать а в clean или по default поставить
+    # зато здесь тоже выставляется дефолт, меньше думать
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    # многое здесь можно закоментить
     slug = forms.CharField(max_length=140, widget=forms.HiddenInput(), required=False)
 
     # An inline class to provide additional information on the form.
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Category
+
+        # здесь без разницы как
+        # exclude = ('slug',)
         fields = ('name',)
 
 
@@ -41,6 +47,7 @@ class PageForm(forms.ModelForm):
         # Some fields may allow NULL values, so we may not want to include them...
         # Here, we are hiding the foreign key.
         # we can either exclude the category field from the form,
+        #поле реально исключается из формы
         exclude = ('category',)
         #or specify the fields to include (i.e. not include the category field)
         #fields = ('title', 'url', 'views')
