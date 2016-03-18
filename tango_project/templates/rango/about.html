@@ -11,8 +11,8 @@
     <body>
         <h1>Rango says...</h1>
         hello world! <p>It is about page</p><strong>{{ boldmessage }}</strong><br />
-        <a href="/rango/">Main</a><br />
-        <img src="{% static "images/images.jpg" %}" alt="Picture of Rango"/> <!-- New line -->
+        <a href="{% url 'index' %}">Main</a><br />
+        <img src = '{% static "images/images.jpg" %}' alt="Picture of Rango"/> <!-- New line -->
     </body>
 
 </html>
