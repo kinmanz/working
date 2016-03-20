@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# куда мы направим пользователя если он не залогинин от @login_required view
+LOGIN_URL = '/rango/login/'
+
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 STATIC_PATH = os.path.join(BASE_DIR,'static')
 MEDIA_URL = '/media/'
