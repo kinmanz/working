@@ -20,6 +20,7 @@ class Category(models.Model):
     def __str__(self):  #For Python 2, use __str__ on Python 3
         return self.name
 
+
 class Page(models.Model):
     category = models.ForeignKey(Category)
     title = models.CharField(max_length=128)

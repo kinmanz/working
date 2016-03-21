@@ -14,9 +14,9 @@ def user_login(request):
     if request.method == 'POST':
         # Gather the username and password provided by the user.
         # This information is obtained from the login form.
-                # We use request.POST.get('<variable>') as opposed to request.POST['<variable>'],
-                # because the request.POST.get('<variable>') returns None, if the value does not exist,
-                # while the request.POST['<variable>'] will raise key error exception
+        # We use request.POST.get('<variable>') as opposed to request.POST['<variable>'],
+        # because the request.POST.get('<variable>') returns None, if the value does not exist,
+        # while the request.POST['<variable>'] will raise key error exception
         username = request.POST.get('username')
         password = request.POST.get('password')
 
@@ -40,7 +40,8 @@ def user_login(request):
         else:
             # Bad login details were provided. So we can't log the user in.
             print("Invalid login details: {0}, {1}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
+            # return HttpResponse("Invalid login details supplied.")
+            return render(request, 'rango/login.html', {'message': "Invalid login details supplied."})
 
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.
@@ -60,6 +61,7 @@ def register(request):
     if request.method == 'POST':
         # Attempt to grab information from the raw form information.
         # Note that we make use of both UserForm and UserProfileForm.
+        # можно было просто написать request.POST
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
 
@@ -108,6 +110,7 @@ def register(request):
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
 
+@login_required
 def add_page(request, category_name_slug):
 
     try:
@@ -146,6 +149,7 @@ def add_page(request, category_name_slug):
     return render(request, 'rango/add_page.html', context_dict)
 
 
+@login_required
 def add_category(request):
 
     if request.method == 'POST':
