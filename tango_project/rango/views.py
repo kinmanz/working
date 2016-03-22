@@ -260,3 +260,10 @@ def user_logout(request):
     logout(request)
     # Take the user back to the homepage.
     return HttpResponseRedirect('/rango/')
+
+
+def some_view(request):
+    if request.user.is_authenticated():
+        return HttpResponse("You are logged in." + request.user.username)
+    else:
+        return HttpResponse("You are not logged in.")
