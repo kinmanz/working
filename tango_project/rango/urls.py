@@ -20,6 +20,7 @@ urlpatterns = [
         url(r'^restricted/', views.restricted, name='restricted'),
         url(r'^logout/$', views.user_logout, name='logout'),
         url(r'^example/$', views.some_view, name='some_view'),
+        url(r'^restricted/$', views.restricted, name='restricted'),
 ]
 
 # urlpatterns = [
