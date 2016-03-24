@@ -6,6 +6,9 @@
 
 
 {% block body_block %}
+         <p style="color: red"> Count of visits: {{ visits }}</p>
+         <p style="color: red"> Last visit: {{ time }}</p>
+
         {% if user.is_authenticated %}
         <h1>Rango says... hello <span style="color: red">{{ user.username }}</span>!</h1>
         {% else %}

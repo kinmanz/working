@@ -36,6 +36,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Absolute path to the media directory
 
 
+# Возможности по настройке времени жизни сессии
+# SESSION_COOKIE_AGE = 1
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 # Application definition
 
 INSTALLED_APPS = [

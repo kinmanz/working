@@ -7,10 +7,9 @@
 
 {% block body_block %}
 
-    <body>
-        <h1>Rango says...</h1>
-        hello world! <p>It is about page</p><strong>{{ boldmessage }}</strong><br />
-        <img src = '{% static "images/images.jpg" %}' alt="Picture of Rango"/> <!-- New line -->
-    </body>
+    <p style="color: red"> Вы заходили к нам: {{ visits }} раза</p>
 
+    <h1>Rango says...</h1>
+    hello world! <p>It is about page</p><strong>{{ boldmessage }}</strong><br />
+    <img src = '{% static "images/images.jpg" %}' alt="Picture of Rango"/> <!-- New line -->
 {% endblock %}
