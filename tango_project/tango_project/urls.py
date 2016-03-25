@@ -20,15 +20,12 @@ from django.conf import settings
 from django.contrib import admin
 from registration.backends.simple.views import RegistrationView
 
+
 # чтобы не откидывала на registartion complete page а на index
 # Create a new class that redirects the user to the index page, if successful at logging
 class MyRegistrationView(RegistrationView):
     def get_success_url(self, request, user):
         return '/rango/'
-
-
-
-
 
 
 urlpatterns = [

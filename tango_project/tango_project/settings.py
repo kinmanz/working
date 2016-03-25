@@ -36,8 +36,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Absolute path to the media directory
 
 # for registration
-REGISTRATION_OPEN = True                # If True, users can register
+REGISTRATION_OPEN = True        # If True, users can register
+
+# This is the number of days users will have to activate their accounts
+# after registering. If a user does not activate within that period, the account
+# will remain permanently inactive and may be deleted by maintenance scripts
+# provided in django-registration-redux.
 ACCOUNT_ACTIVATION_DAYS = 7     # One-week activation window; you may, of course, use a different value.
+
 REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
 LOGIN_REDIRECT_URL = '/rango/'  # The page you want users to arrive at after they successful log in
 LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
