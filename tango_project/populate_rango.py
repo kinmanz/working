@@ -18,6 +18,11 @@ def populate():
         views=1232)
 
     add_page(cat=python_cat,
+        title="Data analysis through Python for Noobs",
+        url="http://www.analyticsvidhya.com/learning-paths-data-science-business-analytics-business-intelligence-big-data/learning-path-data-science-python/",
+        views=1000)
+
+    add_page(cat=python_cat,
         title="How to Think like a Computer Scientist",
         url="http://www.greenteapress.com/thinkpython/",
         views=657)
