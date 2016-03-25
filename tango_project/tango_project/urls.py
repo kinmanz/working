@@ -18,6 +18,17 @@ Including another URLconf
 from django.conf.urls import include, patterns, url
 from django.conf import settings
 from django.contrib import admin
+from registration.backends.simple.views import RegistrationView
+
+# чтобы не откидывала на registartion complete page а на index
+# Create a new class that redirects the user to the index page, if successful at logging
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self, request, user):
+        return '/rango/'
+
+
+
+
 
 
 urlpatterns = [
@@ -25,7 +36,10 @@ urlpatterns = [
     # Examples:
     # url(r'^$', 'tango_with_django_project_17.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
+    #Add in this url pattern to override the default pattern in accounts.
+    url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
     url(r'^rango/', include('rango.urls')),  # ADD THIS NEW TUPLE!
+    url(r'^accounts/', include('registration.backends.simple.urls')),
 ]
 
 
