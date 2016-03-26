@@ -6,6 +6,9 @@
 
 
 {% block body_block %}
+        <div class="page-header">
+                <h1>Ranked list</h1>
+            </div>
          <p style="color: red"> Count of visits: {{ visits }}</p>
          <p style="color: red"> Last visit: {{ time }}</p>
 
@@ -16,31 +19,46 @@
         {% endif %}
 
         {% if categories %}
-        <h2>The most likable categories:</h2>
-            <ul>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">The most likable categories:</h3>
+          </div>
+          <div class="panel-body">
+            <ul class="list-group">
                 {% for category in categories %}
                 <!-- Following line changed to add an HTML hyperlink -->
-                <li>
+                  <li class="list-group-item">
+                    <span class="badge">{{ category.likes }} likes</span>
                     <a href="{% url 'category' category.slug %}">{{ category.name }}</a>
-                    ({{ category.likes }} likes)
-                </li>
+                  </li>
                 {% endfor %}
             </ul>
+          </div>
+        </div>
         {% else %}
             <strong>There are no categories present.</strong>
         {% endif %}
 
         {% if pages %}
-        <h2>The most viewed pages:</h2>
-            <ul>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">The most viewed pages:</h3>
+          </div>
+          <div class="panel-body">
+            <ul class="list-group">
                 {% for page in pages %}
                 <!-- Following line changed to add an HTML hyperlink -->
-                <li>
+                <li class="list-group-item">
                     <a href="{{ page.url }}">{{ page.title }}</a>
-                    ({{ page.views }} views)
+                    <span class="badge">{{ page.views }} views</span>
+
                 </li>
                 {% endfor %}
             </ul>
+          </div>
+        </div>
+
         {% else %}
             <strong>There are no pages present.</strong>
         {% endif %}
