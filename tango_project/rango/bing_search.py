@@ -2,6 +2,7 @@
 import json
 import urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error, urllib.parse
 from .key import BING_API_KEY
+from django.contrib.auth.decorators import login_required
 
 # Add your BING_API_KEY
 

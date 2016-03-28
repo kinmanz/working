@@ -1,7 +1,7 @@
 
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from .models import Category, Page
+from django.shortcuts import render, redirect
+from .models import Category, Page, UserProfile
 from .forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
@@ -154,6 +154,7 @@ def add_page(request, category_name_slug):
 
     return render(request, 'rango/add_page.html', context_dict)
 
+
 def search(request):
 
     result_list = []
@@ -203,6 +204,15 @@ def category(request, category_name_slug):
 
     # Create a context dictionary which we can pass to the template rendering engine.
     context_dict = {}
+
+    if request.method == 'POST':
+        query = request.POST.get('query', None)
+        if query:
+            # Run our Bing function to get the results list!
+            if request.user.is_authenticated():
+                context_dict['result_list'] = run_query(query)
+            else:
+                return redirect('auth_login')
 
     try:
         # Can we find a category name slug with the given name?
@@ -275,7 +285,6 @@ def index(request):
     return response
 
 
-
 def index_about(request):
     context_dict = {'boldmessage': "about page!"}
 
@@ -322,3 +331,59 @@ def some_view(request):
         return HttpResponse("You are logged in." + request.user.username)
     else:
         return HttpResponse("You are not logged in.")
+
+
+def track_url(request):
+    try:
+        if request.method == 'GET':
+            if 'page_id' in request.GET:
+                page_id = request.GET['page_id']
+                page = Page.objects.get(id=page_id)
+                page.views += 1
+                page.save()
+                return redirect(page.url)
+            else:
+               # index is name of the view
+               return redirect('index')
+    except Page.DoesNotExist:
+        return redirect('index')
+
+
+@login_required
+def register_profile(request):
+    user = request.user
+
+    registered = False
+
+    if request.method == 'POST':
+        profile_form = UserProfileForm(data=request.POST)
+
+        if profile_form.is_valid():
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+
+            profile.save()
+            return redirect('index')
+
+        else:
+            print(profile_form.errors)
+
+    else:
+        profile_form = UserProfileForm()
+
+    return render(request, 'rango/profile_registration.html', {'profile_form': profile_form})
+
+
+@login_required
+def profile(request):
+    context = {}
+    try:
+        context['profile'] = UserProfile.objects.get(user=request.user)
+
+    except UserProfile.DoesNotExist:
+        pass
+
+    return render(request, 'rango/profile.html', context)
