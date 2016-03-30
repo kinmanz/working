@@ -38,15 +38,18 @@
           <a class="navbar-brand" href="/rango/">
               Rango
               {% if user.is_authenticated %}
-                : <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ user.username }}
+                :
+              <a class="navbar-brand"  href="{% url 'profile' %}">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                  {{ user.username }}</a>
               {% endif %}
           </a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'search' %}?next=/rango/">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                            Search</a></li>
+                <!--<li><a href="{% url 'search' %}?next=/rango/">-->
+                            <!--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
+                            <!--Search</a></li>-->
                 <li><a href="{% url 'index' %}">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     Home

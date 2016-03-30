@@ -352,15 +352,23 @@ def track_url(request):
 @login_required
 def register_profile(request):
     user = request.user
-
     registered = False
 
     if request.method == 'POST':
         profile_form = UserProfileForm(data=request.POST)
-
         if profile_form.is_valid():
             profile = profile_form.save(commit=False)
-            profile.user = user
+
+            try:
+                prof = UserProfile.objects.get(user=request.user)
+            except UserProfile.DoesNotExist:
+                prof = None
+
+            if prof:
+                prof.website = profile.website
+                profile = prof
+            else:
+                profile.user = user
 
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
@@ -373,6 +381,7 @@ def register_profile(request):
 
     else:
         profile_form = UserProfileForm()
+
 
     return render(request, 'rango/profile_registration.html', {'profile_form': profile_form})
 

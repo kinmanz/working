@@ -50,7 +50,7 @@
                 {% for page in pages %}
                 <!-- Following line changed to add an HTML hyperlink -->
                 <li class="list-group-item">
-                    <a href="{{ page.url }}">{{ page.title }}</a>
+                    <a href="{% url 'goto'%}?page_id={{page.id}}">{{ page.title }}</a>
                     <span class="badge">{{ page.views }} views</span>
 
                 </li>

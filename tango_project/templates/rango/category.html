@@ -10,12 +10,55 @@
         <div class="page-header">
                 <h1>{{ category_name }} <small>category.</small></h1>
         </div>
+
+        <div class="row">
+            {% if not user.is_authenticated %}
+            <div class="alert alert-danger" role="alert">
+                    <strong>You don't have access</strong> for search functionality please
+                    <a href="{% url 'auth_login' %}" class="alert-link">login</a> or make new
+                    <a href="{% url 'registration_register' %}" class="alert-link">account</a>.
+                </div>
+            {% endif %}
+        <div class="panel panel-primary">
+            <br/>
+            <form class="form-inline" id="user_form" method="post" action="{% url 'category'  category.slug %}">
+                {% csrf_token %}
+                <!-- Display the search form elements here -->
+                <input class="form-control" type="text" size="50" name="query" value="" id="query" />
+                {% if user.is_authenticated %}
+                <input class="btn btn-primary" type="submit" name="submit" value="Search" />
+                {% else %}
+                <input class="btn btn-default" type="submit" name="submit" value="login please" disabled="disabled"/>
+                {% endif %}
+                <br />
+            </form>
+
+            <div class="panel">
+                {% if result_list %}
+                    <div class="panel-heading">
+                    <h3 class="panel-title">Results</h3>
+                    <!-- Display search results in an ordered list -->
+                    <div class="panel-body">
+                        <div class="list-group">
+                            {% for result in result_list %}
+                                <div class="list-group-item">
+                                    <h4 class="list-group-item-heading"><a href="{{ result.link }}">{{ result.title }}</a></h4>
+                                    <p class="list-group-item-text">{{ result.summary }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+
         <h1></h1>
             {% if pages %}
             <ul class="list-group">
                 {% for page in pages %}
                 <li class="list-group-item">
-                    <a href="{{ page.url }}">{{ page.title }}</a>
+                    <a href="{% url 'goto'%}?page_id={{page.id}}">{{ page.title }}</a>
                     <span class="badge">{{ page.views }} views</span>
                 </li>
                 {% endfor %}
@@ -25,7 +68,6 @@
             {% endif %}
 
             {% if user.is_authenticated %}
-
             <br>
                 <a href="{% url 'add_page' category.slug %}">
                     <button type="button" class="btn btn-primary btn-lg">
