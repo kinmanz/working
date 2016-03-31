@@ -204,6 +204,8 @@ def category(request, category_name_slug):
 
     # Create a context dictionary which we can pass to the template rendering engine.
     context_dict = {}
+    context_dict['query'] = None
+    context_dict['result_list'] = None
 
     if request.method == 'POST':
         query = request.POST.get('query', None)
@@ -224,7 +226,7 @@ def category(request, category_name_slug):
 
         # Retrieve all of the associated pages.
         # Note that filter returns >= 1 model instance.
-        pages = Page.objects.filter(category=category)
+        pages = Page.objects.filter(category=category).order_by('-views')
 
         # Adds our results list to the template context under name pages.
         context_dict['pages'] = pages
@@ -236,6 +238,9 @@ def category(request, category_name_slug):
         # Don't do anything - the template displays the "no category" message for us.
         # raise Http404("Category does not exist!")
         pass
+
+    if not context_dict['query']:
+        context_dict['query'] = category.name
 
     # Go render the response and return it to the client.
     return render(request, 'rango/category.html', context_dict)
@@ -278,7 +283,6 @@ def index(request):
 
 
     context_dict['visits'] = visits
-
 
     response = render(request,'rango/index.html', context_dict)
 

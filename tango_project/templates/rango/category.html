@@ -24,7 +24,7 @@
             <form class="form-inline" id="user_form" method="post" action="{% url 'category'  category.slug %}">
                 {% csrf_token %}
                 <!-- Display the search form elements here -->
-                <input class="form-control" type="text" size="50" name="query" value="" id="query" />
+                <input class="form-control" type="text" size="50" name="query" value="{{query}}" id="query" />
                 {% if user.is_authenticated %}
                 <input class="btn btn-primary" type="submit" name="submit" value="Search" />
                 {% else %}
@@ -59,7 +59,11 @@
                 {% for page in pages %}
                 <li class="list-group-item">
                     <a href="{% url 'goto'%}?page_id={{page.id}}">{{ page.title }}</a>
-                    <span class="badge">{{ page.views }} views</span>
+                    {% if page.views > 1 %}
+                        <span class="badge">{{ page.views }} views</span>
+                    {% elif page.views == 1 %}
+                        <span class="badge">{{ page.views }} view</span>
+                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>

@@ -27,7 +27,6 @@
           <div class="panel-body">
             <ul class="list-group">
                 {% for category in categories %}
-                <!-- Following line changed to add an HTML hyperlink -->
                   <li class="list-group-item">
                     <span class="badge">{{ category.likes }} likes</span>
                     <a href="{% url 'category' category.slug %}">{{ category.name }}</a>
