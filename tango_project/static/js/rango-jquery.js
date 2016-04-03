@@ -27,14 +27,14 @@ $(document).ready( function() {
     //    msgstr = msgstr + "o"
     //    $("#msg").html(msgstr) //set html in element
     //});
-    $("#likes").click(function(){
-    var catid;
-    catid = $(this).attr("data-catid");
-    $.get('/rango/like_category/', {category_id: catid}, function(data){
-               $('#like_count').html(data);
-               $('#likes').hide();
-    });
-});
+//    $("#likes").click(function(){
+//    var catid;
+//    catid = $(this).attr("data-catid");
+//    $.get('/rango/like_category/', {category_id: catid}, function(data){
+//               $('#like_count').html(data);
+//               $('#likes').hide();
+//    });
+//});
 });
 
 
