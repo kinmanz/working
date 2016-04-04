@@ -1,0 +1,17 @@
+{% if not created %}
+    <div class="alert alert-warning" role="alert">
+        <strong>This page</strong> present in database.
+    </div>
+{% endif %}
+<ul class="list-group">
+    {% for page in pages %}
+    <li class="list-group-item">
+        <a href="{% url 'goto'%}?page_id={{page.id}}">{{ page.title }}</a>
+        {% if page.views > 1 %}
+            <span class="badge">{{ page.views }} views</span>
+        {% elif page.views == 1 %}
+            <span class="badge">{{ page.views }} view</span>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>

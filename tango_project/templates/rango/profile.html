@@ -24,11 +24,19 @@
                     <p><strong>Name:</strong> {{user.username}}</p>
                     <p><strong>Email:</strong> {{user.email}}</p>
                       {% if profile%}
+                      {% if profile.website %}
                       <p><strong>Web site:</strong> {{profile.website}}</p>
+                      {% endif %}
                       {% endif %}
 
 
                   </div>
+                    <a href="{% url 'add_profile' %}">
+                    <button type="button" class="btn btn-primary" style = "margin: 10px; ">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                        Change information
+                    </button>
+                </a>
             </div>
 </div>
 {% endblock %}
