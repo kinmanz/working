@@ -7,7 +7,6 @@ class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
-
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):
@@ -15,7 +14,10 @@ class Category(models.Model):
             #if self.id is None:
                     #self.slug = slugify(self.name)
             self.slug = slugify(self.name)
+            if self.views < 0 or self.likes < 0:
+                self.views = self.likes = 0
             super(Category, self).save(*args, **kwargs)
+
 
     def __str__(self):  #For Python 2, use __str__ on Python 3
         return self.name
