@@ -8,7 +8,8 @@
 {% block body_block %}
         {% if category %}
         <div class="page-header">
-                <h1>{{ category_name }} <small>category.</small></h1>
+                <h1>{{ category_name }}<small> category.</small></h1>
+                <p class="text-right"><small>Created: {{category.date_of_creation}}</small></p>
         </div>
 
         <p>
@@ -74,17 +75,24 @@
         </div>
 
         <h1></h1>
-            <div id = 'pages'>
+            <p id = 'pages'>
             {% if pages %}
             <ul class="list-group">
                 {% for page in pages %}
                 <li class="list-group-item">
                     <a href="{% url 'goto'%}?page_id={{page.id}}">{{ page.title }}</a>
-                    {% if page.views > 1 %}
-                        <span class="badge">{{ page.views }} views</span>
-                    {% elif page.views == 1 %}
-                        <span class="badge">{{ page.views }} view</span>
+                    {% if page.views > 0 %}
+                        {% if page.views > 1 %}
+                            <span class="badge">{{ page.views }} views</span>
+                        {% elif page.views == 1 %}
+                            <span class="badge">{{ page.views }} view</span>
+                        {% endif %}
+                        <p class="text-right">
+                            <small>{{ page.last_visit }}</small>
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        </p>
                     {% endif %}
+
                 </li>
                 {% endfor %}
             </ul>

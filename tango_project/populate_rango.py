@@ -1,4 +1,5 @@
 
+from datetime import datetime
 
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tango_project.settings")
@@ -79,7 +80,14 @@ def add_cat(name, views, likes):
     return c
 
 
+def initAllTime():
+    pages = Page.objects.all()
+    for page in pages:
+        # page.last_visit = datetime.now()
+        page.save()
+
 # Start execution here!
 if __name__ == '__main__':
     print("Starting Rango population script...")
-    populate()
+    # populate()
+    initAllTime()
