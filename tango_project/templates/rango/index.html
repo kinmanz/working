@@ -13,9 +13,9 @@
          <p style="color: red"> Last visit: {{ time }}</p>
 
         {% if user.is_authenticated %}
-        <h1>Rango says... hello <span style="color: red">{{ user.username }}</span>!</h1>
+        <h1>says... hello <span style="color: red">{{ user.username }}</span>!</h1>
         {% else %}
-        <h1>Rango says... hello world!</h1>
+        <h1>says... hello world!</h1>
         {% endif %}
 
         {% if categories %}
