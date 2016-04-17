@@ -21,18 +21,17 @@ from django.contrib import admin
 from registration.backends.simple.views import RegistrationView
 from django.shortcuts import redirect
 
-
 # чтобы не откидывала на registartion complete page а на index
 # Create a new class that redirects the user to the index page, if successful at logging
 class MyRegistrationView(RegistrationView):
     def get_success_url(self, request):
-        return '/rango/add_profile/'
+        return '/rank/add_profile/'
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # Examples:
-    # url(r'^$', 'tango_with_django_project_17.views.home', name='home'),
+    url(r'^$', 'rango.views.index', name='home'),
     # url(r'^blog/', include('blog.urls')),
     #Add in this url pattern to override the default pattern in accounts.
     url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
