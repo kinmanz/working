@@ -36,7 +36,7 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
     #Add in this url pattern to override the default pattern in accounts.
     url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
-    url(r'^rango/', include('rango.urls')),  # ADD THIS NEW TUPLE!
+    url(r'^rank/', include('rango.urls')),  # ADD THIS NEW TUPLE!
     url(r'^accounts/', include('registration.backends.simple.urls')),
 ]
 
