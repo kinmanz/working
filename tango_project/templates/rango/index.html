@@ -7,16 +7,14 @@
 
 {% block body_block %}
         <div class="page-header">
-                <h1>Ranked list</h1>
+                <h1>Ranked list ::
+                    {% if user.is_authenticated %}
+                    <span style="color: red">{{ user.username }}</span>
+                    {% else %}
+                     ...
+                    {% endif %}
+                </h1>
             </div>
-         <p style="color: red"> Count of visits: {{ visits }}</p>
-         <p style="color: red"> Last visit: {{ time }}</p>
-
-        {% if user.is_authenticated %}
-        <h1>says... hello <span style="color: red">{{ user.username }}</span>!</h1>
-        {% else %}
-        <h1>says... hello world!</h1>
-        {% endif %}
 
         {% if categories %}
 

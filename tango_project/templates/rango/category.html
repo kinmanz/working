@@ -9,7 +9,19 @@
         {% if category %}
         <div class="page-header">
                 <h1>{{ category_name }}<small> category.</small></h1>
-                <p class="text-right"><small>Created: {{category.date_of_creation}}</small></p>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Description:</h3>
+            </div>
+          <div class="panel-body">
+            <p><strong>Author:</strong> {{ category.author }}</p>
+            <p><strong>Information:</strong> {{ category.information }}</p>
+
+              <p class="text-right"><small>Created: {{category.date_of_creation}}</small></p>
+
+          </div>
         </div>
 
         <p>
@@ -24,6 +36,7 @@
         {% endif %}
 
         </p>
+
 
         <div class="row">
             {% if not user.is_authenticated %}

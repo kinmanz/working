@@ -3,13 +3,15 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     slug = models.SlugField()
     date_of_creation = models.DateField(default=timezone.now())
-
+    author = models.ForeignKey(User)
+    information = models.CharField(max_length=1000, default="No information present.")
 
     def save(self, *args, **kwargs):
             # Uncomment if you don't want the slug to change every time the name changes
@@ -23,7 +25,6 @@ class Category(models.Model):
             if self.views < 0 or self.likes < 0:
                 self.views = self.likes = 0
             super(Category, self).save(*args, **kwargs)
-
 
     def __str__(self):  #For Python 2, use __str__ on Python 3
         return self.name
