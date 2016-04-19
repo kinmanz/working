@@ -10,6 +10,12 @@ from datetime import datetime
 from .bing_search import run_query
 
 
+def my_image(request):
+    image_data = open("./static/images/favicon.ico", "rb").read()
+    print("open")
+    return HttpResponse(image_data, content_type="image/png")
+
+
 def user_login(request):
 
     # If the request is a HTTP POST, try to pull out the relevant information.

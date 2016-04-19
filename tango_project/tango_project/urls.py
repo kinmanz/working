@@ -20,6 +20,7 @@ from django.conf import settings
 from django.contrib import admin
 from registration.backends.simple.views import RegistrationView
 from django.shortcuts import redirect
+from django.views.generic.base import RedirectView
 
 # чтобы не откидывала на registartion complete page а на index
 # Create a new class that redirects the user to the index page, if successful at logging
@@ -29,6 +30,8 @@ class MyRegistrationView(RegistrationView):
 
 
 urlpatterns = [
+    url(r'^favicon1\.ico$', 'rango.views.my_image'),
+    url(r'^favicon\.ico$', 'rango.views.my_image'),
     url(r'^admin/', admin.site.urls),
     # Examples:
     url(r'^$', 'rango.views.index', name='home'),
