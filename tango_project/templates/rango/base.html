@@ -37,7 +37,7 @@
   <body>
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
+      <div class="container-fluid" style="background-color:#a4b5ff;">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -46,11 +46,11 @@
             <span class="icon-bar"></span>
           </button>
 
-          <a class="navbar-brand" href="{% url 'home' %}">
+          <a class="navbar-brand" href="{% url 'home' %}" style="color: black">
               RankedList
               {% if user.is_authenticated %}
                 :
-              <a class="navbar-brand"  href="{% url 'profile' %}">
+              <a class="navbar-brand"  href="{% url 'profile' %}" style="color: black">
                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                   {{ user.username }}</a>
               {% endif %}
@@ -61,30 +61,30 @@
                 <!--<li><a href="{% url 'search' %}?next=/rango/">-->
                             <!--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
                             <!--Search</a></li>-->
-                <li><a href="{% url 'index' %}">
+                <li><a href="{% url 'index' %}" style="color: black">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     Home
                 </a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'add_category' %}">
+                        <li><a href="{% url 'add_category' %}" style="color: black">
                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                             Add a New Category</a></li>
-                        <li><a href="{% url 'restricted' %}">Restricted Page</a></li>
-                        <li><a href="{% url 'auth_password_change' %}">Change password</a></li>
-                        <li><a href="{% url 'auth_logout' %}?next={% url 'home' %}">
-                            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                        <li><a href="{% url 'restricted' %}" style="color: black">Restricted Page</a></li>
+                        <li><a href="{% url 'auth_password_change' %}" style="color: black">Change password</a></li>
+                        <li><a href="{% url 'auth_logout' %}?next={% url 'home' %}" style="color: black">
+                            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true" style="color: black"></span>
                             Logout</a></li>
 
                     {% else %}
-                        <li><a href="{% url 'registration_register' %}">Register Here</a></li>
-                        <li><a href="{% url 'auth_login' %}">
+                        <li><a href="{% url 'registration_register' %}" style="color: black">Register Here</a></li>
+                        <li><a href="{% url 'auth_login' %}" style="color: black">
 
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-user" aria-hidden="true" style="color: black"></span>
                             Login
                         </a></li>
-                        <li><a href="{% url 'restricted' %}">Restricted Page</a></li>
+                        <li><a href="{% url 'restricted' %}" style="color: black">Restricted Page</a></li>
                     {% endif %}
-                                <li><a href="{% url 'index_about' %}">
+                                <li><a href="{% url 'index_about' %}" style="color: black">
                                     About
                                 </a></li>
 
