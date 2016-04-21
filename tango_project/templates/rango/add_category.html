@@ -7,19 +7,88 @@
 
 {% block body_block %}
 
-        <form id="category_form" method="post" action="{% url 'add_category' %}">
-        <h2 class="form-signin-heading">Add category</h2>
-            {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
+        <!--<form id="category_form" method="post" action="{% url 'add_category' %}">-->
+        <!--<h2 class="form-signin-heading">Add category</h2>-->
+            <!--{% csrf_token %}-->
+            <!--{% for hidden in form.hidden_fields %}-->
+                <!--{{ hidden }}-->
+            <!--{% endfor %}-->
 
-            {% for field in form.visible_fields %}
-                {{ field.errors }}
-                {{ field.help_text }}
-                {{ field }}
-            {% endfor %}
-            <button class="btn btn-primary" type="submit" name="submit">Create Category</button>
+            <!--{% for field in form.visible_fields %}-->
+                <!--{{ field.errors }}-->
+                <!--{{ field.help_text }}-->
+                <!--{{ field }}-->
+            <!--{% endfor %}-->
+            <!--<button class="btn btn-primary" type="submit" name="submit">Create Category</button>-->
+        <!--</form>-->
+
+        <div class="page-header">
+                <h3>User {{ user.username }} :: <small>Add Category</small></h3>
+        </div>
+
+        <ul class="list-group">
+        {% for error in errors %}
+              <li class= "list-group-item list-group-item-danger">  {{ error }}</li>
+        {% endfor %}
+        </ul>
+
+        <form class="form-horizontal" id="category_form" method="post" action="{% url 'add_category' %}">
+            {% csrf_token %}
+          <div class="form-group">
+            <label for="id_name" class="col-sm-2 control-label">Name: </label>
+            <div class="col-sm-10">
+              <input type="text" id="id_name" maxlength="50" class="form-control" name="name" placeholder="Category name">
+            </div>
+          </div>
+            <div class="form-group">
+            <label for="id_information" class="col-sm-2 control-label">Information: </label>
+            <div class="col-sm-10">
+              <textarea class="form-control" name="information" rows="5" id="id_information" maxlength="1000" placeholder="Category description"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-lg btn-primary btn">
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                  Make</button>
+            </div>
+          </div>
         </form>
+
+        <div class="alert alert-warning" role="alert">
+
+<span class="helptext">
+  <ul>
+    <li><strong>Category name</strong> should be simple.(Less than 50 characters, but more than 3.)</li>
+    <li><strong>Category information</strong> should be also simple.(Less than 1000 characters.)</li>
+  </ul>
+</span>
+</div>
+
+
+        <!--<form id="category_form" method="post" action="/rank/add_category/">-->
+        <!--<h2 class="form-signin-heading">Add category</h2>-->
+            <!--<input type='hidden' name='csrfmiddlewaretoken' value='e1EHX5IxT0j3qvAuqIh7tsQXD9dydvYP' />-->
+
+                <!--<input id="id_views" name="views" type="hidden" value="0" />-->
+
+                <!--<input id="id_likes" name="likes" type="hidden" value="0" />-->
+
+                <!--<input id="id_slug" maxlength="140" name="slug" type="hidden" />-->
+
+
+
+
+                <!--Please enter the category name.-->
+                <!--<input id="id_name" maxlength="128" name="name" type="text" />-->
+
+
+                <!--Please enter the category information-->
+                <!--<input id="id_information" maxlength="1000" name="information" type="text" />-->
+
+            <!--<button class="btn btn-primary" type="submit" name="submit">Create Category</button>-->
+        <!--</form>-->
 
 {% endblock %}

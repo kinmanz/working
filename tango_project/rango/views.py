@@ -177,33 +177,28 @@ def search(request):
 
 @login_required
 def add_category(request):
-
+    errors = []
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        name = request.POST['name']
+        information = request.POST['information']
 
-        # Have we been provided with a valid form?
-        if form.is_valid():
-            # Save the new category to the database.
-            # вернёт созданую модель после вызова
+        if len(name) < 3 or len(name) > 20: errors.append("Please make name with length less than 128 characters.")
+        if len(information) > 1000: errors.append("Please make information with length less than 1000 characters.")
+        if Category.objects.filter(name=name).count() > 0:
+            errors.append("This name already is used.")
 
-            # здесь объект будет и создан и сохранён в базу, последющих save не потребуется
-            cat = form.save(commit=True)
+        if len(errors) == 0:
+            cat = Category(name=name, author=request.user, information=information)
+            cat.save()
 
-            # print(cat.name, cat.slug)
-            # Now call the index() view.
-            # The user will be shown the homepage.
-            # redirect("rango/")
-            return index(request)
-        else:
-            # The supplied form contained errors - just print them to the terminal.
-            print(form.errors)
+            return category(request, cat.slug)
     else:
         # If the request was not a POST, display the form to enter details.
-        form = CategoryForm()
+        errors.append("Please, use form.")
 
     # Bad form (or form details), no form supplied...
     # Render the form with error messages (if any).
-    return render(request, 'rango/add_category.html', {'form': form})
+    return render(request, 'rango/add_category.html', {'errors': errors})
 
 
 @login_required

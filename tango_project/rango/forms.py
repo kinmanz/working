@@ -18,11 +18,13 @@ class UserProfileForm(forms.ModelForm):
 
 
 class CategoryForm(forms.ModelForm):
-    name = forms.CharField(max_length=128, help_text="Please enter the category name.")
+    name = forms.CharField(max_length=50, help_text="Please enter the category name.")
     # не будут верны в форме, их вообще по факту можно не трогать а в clean или по default поставить
     # зато здесь тоже выставляется дефолт, меньше думать
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    information = forms.CharField(widget=forms.TextInput(), max_length=1000, min_length=10,
+                                  help_text="Please enter the category information")
     # многое здесь можно закоментить
     slug = forms.CharField(max_length=140, widget=forms.HiddenInput(), required=False)
 
@@ -33,7 +35,7 @@ class CategoryForm(forms.ModelForm):
 
         # здесь без разницы как
         # exclude = ('slug',)
-        fields = ('name',)
+        fields = ('name', 'information')
 
 
 class PageForm(forms.ModelForm):
