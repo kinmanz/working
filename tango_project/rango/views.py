@@ -190,7 +190,6 @@ def add_category(request):
         if len(errors) == 0:
             cat = Category(name=name, author=request.user, information=information)
             cat.save()
-
             return category(request, cat.slug)
     else:
         # If the request was not a POST, display the form to enter details.
@@ -256,6 +255,7 @@ def category(request, category_name_slug):
         # We also add the category object from the database to the context dictionary.
         # We'll use this in the template to verify that the category exists.
         context_dict['category'] = category
+        context_dict['picture'] = UserProfile.objects.get(user=category.author).picture
     except Category.DoesNotExist:
         # We get here if we didn't find the specified category.
         # Don't do anything - the template displays the "no category" message for us.
@@ -264,6 +264,7 @@ def category(request, category_name_slug):
 
     if not context_dict['query']:
         context_dict['query'] = category.name
+
 
     # Go render the response and return it to the client.
     return render(request, 'rango/category.html', context_dict)
