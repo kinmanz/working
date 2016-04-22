@@ -12,6 +12,8 @@ class Category(models.Model):
     date_of_creation = models.DateField(default=timezone.now())
     author = models.ForeignKey(User)
     information = models.CharField(max_length=1000, default="No information present.")
+    lock = models.CharField(max_length=100, default="")
+    open = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
             # Uncomment if you don't want the slug to change every time the name changes

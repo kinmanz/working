@@ -8,6 +8,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from .bing_search import run_query
+from .my_random_generate import generate
+
 
 
 def my_image(request):
@@ -429,8 +431,6 @@ def profile(request, user_name):
         pass
 
 
-
-
 @login_required
 def like_category(request):
 
@@ -468,3 +468,25 @@ def suggest_category(request):
         cat_list = get_category_list(8, starts_with)
 
         return render(request, 'rango/category_list.html', {'cat_list': cat_list })
+
+
+@login_required
+def lock(request):
+    user = request.user
+    cat_id = None
+    if request.method == 'GET':
+        cat_id = request.GET['category_id']
+        try:
+            cat = Category.objects.get(id=int(cat_id))
+            if cat.author == user:
+                cat.open ^= True
+                if cat.open and cat.lock == "":
+                    cat.lock = generate()
+                cat.save()
+                if cat.open:
+                    return HttpResponse("Unlocked: it's in a public access now.")
+                return HttpResponse(cat.lock)
+        except Category.DoesNotExist:
+            pass
+    return HttpResponse("lock error")
+

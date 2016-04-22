@@ -17,6 +17,20 @@
             </div>
           <div class="panel-body">
 
+              {% if category.open %}
+                <button id="lock-btn" data-catid="{{category.id}}" class="btn btn-mini" type="button">
+                    Lock
+                </button>
+              {% else %}
+                  <button id="unlock-btn" data-catid="{{category.id}}" class="btn btn-mini" type="button">
+                        Unlock
+                  </button>
+              {% endif %}
+
+          <span id = "lock-info">
+
+          </span>
+
 
             <p><strong>Information:</strong> {{ category.information }}</p>
 

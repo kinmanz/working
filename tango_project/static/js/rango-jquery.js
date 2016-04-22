@@ -45,6 +45,23 @@ $(document).ready( function() {
                         me.hide();
                         });
                                 });
+    $("#lock-btn").click(function(){
+        var me = $(this)
+        var catid = $(this).attr("data-catid");
+        $.get('/rank/lock/', {category_id: catid}, function(data){
+                        $('#lock-info').html(data);
+                        me.hide();
+                        });
+                                });
+
+    $("#unlock-btn").click(function(){
+        var me = $(this)
+        var catid = $(this).attr("data-catid");
+        $.get('/rank/lock/', {category_id: catid}, function(data){
+                        $('#lock-info').html(data);
+                        me.hide();
+                        });
+                                });
 });
 
 
