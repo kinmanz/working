@@ -36,6 +36,8 @@ class Page(models.Model):
     url = models.URLField()
     views = models.IntegerField(default=0)
     last_visit = models.DateTimeField(default=timezone.now())
+    information = models.CharField(max_length=200, default="")
+
 
     def save(self, *args, **kwargs):
         self.modified = timezone.now()

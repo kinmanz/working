@@ -7,7 +7,7 @@
 
 {% block body_block %}
         <div class="page-header">
-                <h3>User <small>{{ user.username }}</small></h3>
+                <h3>User <small>{{ current_user.username }}</small></h3>
         </div>
         <div class="row">
         <div class="col-xs-6 col-md-3">
@@ -21,22 +21,23 @@
         </div>
             <div class="panel panel-default">
                   <div class="panel-body">
-                    <p><strong>Name:</strong> {{user.username}}</p>
-                    <p><strong>Email:</strong> {{user.email}}</p>
+                    <p><strong>Name:</strong> {{current_user.username}}</p>
+                    <p><strong>Email:</strong> {{current_user.email}}</p>
                       {% if profile%}
                       {% if profile.website %}
                       <p><strong>Web site:</strong> {{profile.website}}</p>
                       {% endif %}
                       {% endif %}
 
-
                   </div>
+                    {% if current_user == user %}
                     <a href="{% url 'add_profile' %}">
                     <button type="button" class="btn btn-primary" style = "margin: 10px; ">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                         Change information
                     </button>
-                </a>
-            </div>
+                    </a>
+                    {% endif %}
+                </div>
 </div>
 {% endblock %}

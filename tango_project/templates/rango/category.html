@@ -13,7 +13,7 @@
 
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Description:</h3>
+                <h3 class="panel-title"><strong>Description:</strong></h3>
             </div>
           <div class="panel-body">
 
@@ -31,10 +31,15 @@
                 {% endif %}
               </div>
               <div class="media-body">
-                <h4 class="media-heading"><p><strong>Author:</strong> {{ category.author }}</p></h4>
+
+                <h4 class="media-heading"><p><strong>Author:</strong>
+                    <a href="{% url 'profile' category.author %}"> {{ category.author }}
+                        </a></p></h4>
+
                   <p class="text-left">Created: <small>{{category.date_of_creation}}</small></p>
               </div>
             </div>
+
 
           </div>
         </div>
@@ -119,6 +124,7 @@
                             <small>{{ page.last_visit }}</small>
                             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                         </p>
+                        {{ page.information }}
                     {% endif %}
                 </li>
                 {% endfor %}

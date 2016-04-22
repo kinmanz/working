@@ -1,7 +1,7 @@
 
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import Category, Page, UserProfile
+from .models import Category, Page, UserProfile, User
 from .forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
@@ -417,15 +417,18 @@ def register_profile(request):
 
 
 @login_required
-def profile(request):
+def profile(request, user_name):
     context = {}
     try:
-        context['profile'] = UserProfile.objects.get(user=request.user)
+        user=User.objects.get(username=user_name)
+        context['current_user'] = user
+        context['profile'] = UserProfile.objects.get(user=user)
+        return render(request, 'rango/profile.html', context)
 
-    except UserProfile.DoesNotExist:
+    except UserProfile.DoesNotExist or User.DoesNotExist:
         pass
 
-    return render(request, 'rango/profile.html', context)
+
 
 
 @login_required
