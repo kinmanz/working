@@ -24,6 +24,7 @@ urlpatterns = [
         url(r'^like_category/$', views.like_category, name='like_category'),
         url(r'^add_profile/$', views.register_profile, name='add_profile'),
         url(r'^profile/(?P<user_name>[\w\-]+)/$', views.profile, name='profile'),
+        url(r'^lockid/(?P<lockid>[\w\-]+)/$', views.lockid, name='lockid'),
         url(r'^suggest_category/$', views.suggest_category, name='suggest_category'),
         url(r'^auto_add_page/$', views.auto_add_page, name='auto_add_page'),
         url(r'^lock/$', views.lock, name='lock'),

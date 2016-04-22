@@ -17,24 +17,7 @@
             </div>
           <div class="panel-body">
 
-              {% if category.open %}
-                <button id="lock-btn" data-catid="{{category.id}}" class="btn btn-mini" type="button">
-                    Lock
-                </button>
-              {% else %}
-                  <button id="unlock-btn" data-catid="{{category.id}}" class="btn btn-mini" type="button">
-                        Unlock
-                  </button>
-              {% endif %}
-
-          <span id = "lock-info">
-
-          </span>
-
-
             <p><strong>Information:</strong> {{ category.information }}</p>
-
-
 
             <div class="media">
               <div class="media-left">
@@ -56,6 +39,30 @@
 
 
           </div>
+
+            <div class="alert alert-info" role="alert">
+                      {% if category.author == user %}
+                {% if category.open %}
+                    <button data-catid="{{category.id}}" class="lock-btn btn btn-primary" type="button">Lock</button>
+                {% else %}
+                    <button data-catid="{{category.id}}" class="lock-btn btn btn-primary" type="button">Unlock</button>
+                {% endif %}
+            <div id = "lock-info">
+                    {% if category.open %}
+                        <p><strong>Your category now is in a public access.</strong></p>
+                    {% else %}
+                        <strong>
+                        <p>Your category now is in a private access.</p>
+                        <p>To share it with other people you should use this
+                        </strong>
+                        <a href="{% url 'lockid' category.lock %}">Page.</a>
+                        </p>
+                    {% endif %}
+            {% endif %}
+            </div>
+
+            </div>
+
         </div>
 
         <p>

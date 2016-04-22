@@ -477,16 +477,27 @@ def lock(request):
     if request.method == 'GET':
         cat_id = request.GET['category_id']
         try:
+            # print(cat_id)
             cat = Category.objects.get(id=int(cat_id))
-            if cat.author == user:
+            if cat.author.id == user.id:
                 cat.open ^= True
-                if cat.open and cat.lock == "":
+                print("Here")
+                if not cat.open:
                     cat.lock = generate()
                 cat.save()
-                if cat.open:
-                    return HttpResponse("Unlocked: it's in a public access now.")
-                return HttpResponse(cat.lock)
+            return render(request, 'inners/lock.html', {'cat': cat})
         except Category.DoesNotExist:
             pass
-    return HttpResponse("lock error")
+    return HttpResponse("Category does not exist")
+
+
+@login_required
+def lockid(request, lockid):
+    try:
+        if lockid != "":
+            cat = Category.objects.get(lock=lockid)
+            return category(request, cat.slug)
+    except Category.DoesNotExist:
+        pass
+    return HttpResponse("Category key isn't valid!")
 
