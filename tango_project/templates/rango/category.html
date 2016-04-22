@@ -39,9 +39,9 @@
 
 
           </div>
-
+                {% if category.author == user %}
             <div class="alert alert-info" role="alert">
-                      {% if category.author == user %}
+
                 {% if category.open %}
                     <button data-catid="{{category.id}}" class="lock-btn btn btn-primary" type="button">Lock</button>
                 {% else %}
@@ -58,8 +58,9 @@
                         <a href="{% url 'lockid' category.lock %}">Page.</a>
                         </p>
                     {% endif %}
-            {% endif %}
+
             </div>
+                {% endif %}
 
             </div>
 
