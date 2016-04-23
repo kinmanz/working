@@ -261,8 +261,8 @@ def category(request, category_name_slug):
     except Category.DoesNotExist:
         # We get here if we didn't find the specified category.
         # Don't do anything - the template displays the "no category" message for us.
-        # raise Http404("Category does not exist!")
-        pass
+        raise Http404("Category does not exist!")
+        # pass
 
     if not context_dict['query']:
         context_dict['query'] = category.name
