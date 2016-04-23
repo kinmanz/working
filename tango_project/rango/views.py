@@ -280,9 +280,9 @@ def index(request):
     # Order the categories by no. likes in descending order.
     # Retrieve the top 5 only - or all if less than 5.
     # Place the list in our context_dict dictionary which will be passed to the template engine.
-    category_list = Category.objects.order_by('-likes')[:5]
+    category_list = Category.objects.filter(open=True).order_by('-likes')[:5]
     context_dict = {'categories': category_list}
-    page_list = Page.objects.order_by('-views')[:5]
+    page_list = Page.objects.filter(category__open=True).order_by('-views')[:5]
     context_dict['pages'] = page_list
 
     visits = request.session.get('visits', 1)
@@ -414,7 +414,6 @@ def register_profile(request):
     else:
         profile_form = UserProfileForm()
 
-
     return render(request, 'rango/profile_registration.html', {'profile_form': profile_form})
 
 
@@ -422,9 +421,10 @@ def register_profile(request):
 def profile(request, user_name):
     context = {}
     try:
-        user=User.objects.get(username=user_name)
+        user = User.objects.get(username=user_name)
         context['current_user'] = user
         context['profile'] = UserProfile.objects.get(user=user)
+        context['cats'] = Category.objects.filter(author=user).order_by('-open')
         return render(request, 'rango/profile.html', context)
 
     except UserProfile.DoesNotExist or User.DoesNotExist:
@@ -449,12 +449,13 @@ def like_category(request):
     return HttpResponse(likes)
 
 
-def get_category_list(max_results=0, starts_with=''):
+def get_category_list(user=None, max_results=0, starts_with=''):
 
         cat_list = []
 
         if starts_with:
-                cat_list = Category.objects.filter(name__istartswith=starts_with)
+                cat_list = list(Category.objects.filter(name__istartswith=starts_with).filter(open=True)[:max_results])
+                cat_list += list(Category.objects.filter(name__istartswith=starts_with).filter(open=False).filter(author=user))
 
         return cat_list[:max_results]
 
@@ -465,7 +466,7 @@ def suggest_category(request):
         if request.method == 'GET':
                 starts_with = request.GET['suggestion']
 
-        cat_list = get_category_list(8, starts_with)
+        cat_list = get_category_list(request.user, 8, starts_with)
 
         return render(request, 'rango/category_list.html', {'cat_list': cat_list })
 

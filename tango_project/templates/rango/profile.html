@@ -28,7 +28,6 @@
                       <p><strong>Web site:</strong> {{profile.website}}</p>
                       {% endif %}
                       {% endif %}
-
                   </div>
                     {% if current_user == user %}
                     <a href="{% url 'add_profile' %}">
@@ -38,6 +37,23 @@
                     </button>
                     </a>
                     {% endif %}
+                <h3 style="text-align: center; color: #7e86ed">Own: </h3>
+                <div class="list-group">
+                    {% for cat in cats %}
+                            {% if cat.open or current_user == user %}
+                                <a href="{% url 'category' cat.slug %}" class="list-group-item">
+                                    <strong>{{ cat.name }}</strong></a>
+                            {% else %}
+                                <a href="#" class="list-group-item disabled">
+                                    <span class="glyphicon glyphicon-lock" aria-hidden="true"> </span>
+                                {{cat.name}}
+                                </a>
+                            {% endif %}
+                    {% empty %}
+                        <li>This user don't have any own categories.</li>
+                    {% endfor %}
+                    </ul>
                 </div>
-</div>
+                </div>
+        </div>
 {% endblock %}
