@@ -428,7 +428,8 @@ def profile(request, user_name):
         return render(request, 'rango/profile.html', context)
 
     except UserProfile.DoesNotExist or User.DoesNotExist:
-        pass
+        raise Http404("User does not exist!")
+        # pass
 
 
 @login_required
