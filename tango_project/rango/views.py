@@ -427,7 +427,7 @@ def profile(request, user_name):
         context['cats'] = Category.objects.filter(author=user).order_by('-open')
         return render(request, 'rango/profile.html', context)
 
-    except UserProfile.DoesNotExist or User.DoesNotExist:
+    except :
         raise Http404("User does not exist!")
         # pass
 
