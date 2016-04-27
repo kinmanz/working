@@ -7,9 +7,13 @@
         <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
         <form class="form-signin" role="form" method="post" action=".">
         {% csrf_token %}
-         {% if form.errors %}
+                {% if form.errors %}
             <div class="alert alert-danger" role="alert">
-                <p>{{ form.errors }}</p>
+                {% for error in form.non_field_errors %}
+                    <div class="fieldWrapper">
+                        {{ error }}
+                    </div>
+                {% endfor %}
             </div>
                 {% endif %}
         <h2 class="form-signin-heading">Please sign in</h2>
