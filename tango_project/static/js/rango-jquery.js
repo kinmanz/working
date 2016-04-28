@@ -39,14 +39,14 @@ $(document).ready( function() {
     var catid = $(this).attr("data-catid");
         var url = $(this).attr("data-url");
         var title = $(this).attr("data-title");
-        var me = $(this)
+        var me = $(this);
         $.get('/rank/auto_add_page/', {category_id: catid, url: url, title: title}, function(data){
                         $('#pages').html(data);
                         me.hide();
                         });
                                 });
     $(".lock-btn").click(function(){
-        var me = $(this)
+        var me = $(this);
         var catid = $(this).attr("data-catid");
         $.get('/rank/lock/', {category_id: catid}, function(data){
                     if (me.html() == "Lock" )
@@ -58,6 +58,12 @@ $(document).ready( function() {
                     $('#lock-info').html(data);
                         });
                                 });
+
+    $(".rank-change").click(function(){
+        var me = $(this);
+        //var info = $('#lock-info');
+         $('#cat-info').html("aaaa --------------------- ");
+                        });
 });
 
 

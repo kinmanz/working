@@ -176,6 +176,28 @@ def search(request):
 
     return render(request, 'rango/search.html', {'result_list': result_list})
 
+@login_required
+def change_category(request):
+    errors = []
+    if request.method == 'POST':
+        information = request.POST['information']
+
+        if len(information) > 1000: errors.append("Please make information with length less than 1000 characters.")
+        if Category.objects.filter(name=name).count() > 0:
+            errors.append("This name already is used.")
+
+        if len(errors) == 0:
+            cat = Category(name=name, author=request.user, information=information)
+            cat.save()
+            return category(request, cat.slug)
+    else:
+        # If the request was not a POST, display the form to enter details.
+        errors.append("Please, use form.")
+
+    # Bad form (or form details), no form supplied...
+    # Render the form with error messages (if any).
+    return render(request, 'rango/add_category.html', {'errors': errors})
+
 
 @login_required
 def add_category(request):

@@ -17,7 +17,10 @@
             </div>
           <div class="panel-body">
 
-            <p><strong>Information:</strong> {{ category.information }}</p>
+            <p><strong>Information:</strong>
+                <span id = "cat-info">
+               {{ category.information }}
+              </span></p>
 
             <div class="media">
               <div class="media-left">
@@ -37,15 +40,15 @@
               </div>
             </div>
 
-
           </div>
                 {% if category.author == user %}
             <div class="alert alert-info" role="alert">
+                <button class="rank-change btn btn-mini btn-info" type="button">Change</button>
 
                 {% if category.open %}
-                    <button data-catid="{{category.id}}" class="lock-btn btn btn-primary" type="button">Lock</button>
+                    <button data-catid="{{category.id}}" class="lock-btn btn btn-info" type="button">Lock</button>
                 {% else %}
-                    <button data-catid="{{category.id}}" class="lock-btn btn btn-primary" type="button">Unlock</button>
+                    <button data-catid="{{category.id}}" class="lock-btn btn btn-info" type="button">Unlock</button>
                 {% endif %}
             <div id = "lock-info">
                     {% if category.open %}
