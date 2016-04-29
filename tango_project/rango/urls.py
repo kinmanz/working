@@ -10,6 +10,7 @@ urlpatterns = [
         url(r'^about/$', views.index_about, name='index_about'),
         url(r'^new/$', views.index2, name='index2'),
         url(r'^add_category/$', views.add_category, name='add_category'),
+        url(r'^change_category/$', views.change_category, name='change_category'),
 
         # слово + дефис + любое их количество до слеша /
         url(r'^category/(?P<category_name_slug>[\w\-]+)/$', views.category, name='category'),

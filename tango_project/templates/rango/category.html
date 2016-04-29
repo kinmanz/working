@@ -24,7 +24,7 @@
 
             <div class="media">
               <div class="media-left">
-                    {% if picture  %}
+                {% if picture  %}
               <img class="media-object img-circle"  width="40" height="40" src="/media/{{picture}}"/>
                 {% else %}
               <img class="media-object img-circle"  width="40" height="40" src='{% static "images/no-avatar-male.jpg" %}'/>
@@ -43,7 +43,26 @@
           </div>
                 {% if category.author == user %}
             <div class="alert alert-info" role="alert">
-                <button class="rank-change btn btn-mini btn-info" type="button">Change</button>
+                <div id = "change-form" style="display: none">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                        <label for="change_information" class="col-sm-2 control-label">Information: </label>
+                        <div class="col-sm-10">
+                          <textarea class="form-control" name="information" rows="5" id="change_information" minlength="2" maxlength="1000" placeholder="Category description"></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                          <button id = "change-bth" class="btn btn-info btn" data-catid="{{category.id}}">
+                              <span class="glyphicon glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                               Save</button>
+                        </div>
+                      </div>
+                      </div>
+                </div>
+                <button class="rank-change btn btn-mini btn-info" type="button">
+                    Change <span class="glyphicon glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
 
                 {% if category.open %}
                     <button data-catid="{{category.id}}" class="lock-btn btn btn-info" type="button">Lock</button>

@@ -62,7 +62,28 @@ $(document).ready( function() {
     $(".rank-change").click(function(){
         var me = $(this);
         //var info = $('#lock-info');
-         $('#cat-info').html("aaaa --------------------- ");
+         $(this).hide();
+         $('#change-form').show();
+
+
+                        });
+
+    $("#change-bth").click(function(){
+        $('#change-form').show();
+        var me = $(this);
+        var inf = $("#change_information").val();
+        var catid = $(this).attr("data-catid");
+        $.get('/rank/change_category/', {cat_id: catid, information: inf}, function(data){
+                    if (data == "ok" )
+                    {
+                        $("#cat-info").html(inf);
+                        $('#change-form').hide();
+                        $(".rank-change").show();
+
+                    } else {
+                        $("#change_information").attr("placeholder", data);
+                    }
+                        });
                         });
 });
 

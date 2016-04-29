@@ -179,24 +179,30 @@ def search(request):
 @login_required
 def change_category(request):
     errors = []
-    if request.method == 'POST':
-        information = request.POST['information']
+    if request.method == 'GET':
+        information = request.GET['information']
+        catid = request.GET['cat_id']
 
-        if len(information) > 1000: errors.append("Please make information with length less than 1000 characters.")
-        if Category.objects.filter(name=name).count() > 0:
-            errors.append("This name already is used.")
+        if len(information) > 1000 or information == "":
+            errors.append("Please make information with length less than 1000 characters and not empty.")
+        cat = Category.objects.filter(id=catid)
+        if cat.count() > 0 and len(errors)==0:
+            cat = cat[0]
+            if cat.author == request.user:
+                cat.information = information
+                cat.save()
+            else:
+                errors.append("Who are you?")
+        else:
+            errors.append("This category doesn't exist")
 
         if len(errors) == 0:
-            cat = Category(name=name, author=request.user, information=information)
-            cat.save()
-            return category(request, cat.slug)
+            return HttpResponse("ok")
+
     else:
-        # If the request was not a POST, display the form to enter details.
         errors.append("Please, use form.")
 
-    # Bad form (or form details), no form supplied...
-    # Render the form with error messages (if any).
-    return render(request, 'rango/add_category.html', {'errors': errors})
+    return HttpResponse(errors[0])
 
 
 @login_required
