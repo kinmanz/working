@@ -252,7 +252,7 @@ def auto_add_page(request):
     return render(request, 'rango/page_list.html', context_dict)
 
 
-def category(request, category_name_slug):
+def category(request, category_name_slug, lock = False):
 
     # Create a context dictionary which we can pass to the template rendering engine.
     context_dict = {}
@@ -273,6 +273,11 @@ def category(request, category_name_slug):
         # If we can't, the .get() method raises a DoesNotExist exception.
         # So the .get() method returns one model instance or raises an exception.
         category = Category.objects.get(slug=category_name_slug)
+        if not category.open and not lock:
+            if category.author != request.user:
+                raise Http404("Category does not exist or you don't have access.")
+
+
 
         context_dict['category_name'] = category.name
 
@@ -521,12 +526,11 @@ def lock(request):
     return HttpResponse("Category does not exist")
 
 
-@login_required
 def lockid(request, lockid):
     try:
         if lockid != "":
             cat = Category.objects.get(lock=lockid)
-            return category(request, cat.slug)
+            return category(request, cat.slug, lock = True)
     except Category.DoesNotExist:
         pass
     return HttpResponse("Category key isn't valid!")
