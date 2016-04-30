@@ -455,7 +455,6 @@ def register_profile(request):
     return render(request, 'rango/profile_registration.html', {'profile_form': profile_form})
 
 
-@login_required
 def profile(request, user_name):
     context = {}
     try:
