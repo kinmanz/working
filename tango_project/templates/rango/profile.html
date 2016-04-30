@@ -42,7 +42,11 @@
                     {% for cat in cats %}
                             {% if cat.open or current_user == user %}
                                 <a href="{% url 'category' cat.slug %}" class="list-group-item">
+                                    {% if not cat.open %}
+                                    <span class="glyphicon glyphicon-lock" aria-hidden="true"> </span>
+                                    {% endif %}
                                     <strong>{{ cat.name }}</strong></a>
+
                             {% else %}
                                 <a href="#" class="list-group-item disabled">
                                     <span class="glyphicon glyphicon-lock" aria-hidden="true"> </span>

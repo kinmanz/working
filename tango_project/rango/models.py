@@ -17,9 +17,9 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
             # Uncomment if you don't want the slug to change every time the name changes
-            #if self.id is None:
-                    #self.slug = slugify(self.name)
-            self.slug = slugify(self.name)
+            if self.id is None:
+                    self.slug = slugify(self.name)
+            # self.slug = slugify(self.name)
 
             if not self.id:
                 self.date_of_creation = timezone.now()

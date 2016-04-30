@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from .bing_search import run_query
 from .my_random_generate import generate
+from django.template.defaultfilters import slugify
 
 
 
@@ -219,6 +220,10 @@ def add_category(request):
 
         if len(errors) == 0:
             cat = Category(name=name, author=request.user, information=information)
+            count = Category.objects.filter(slug=slugify(name)).count()
+            cat.save()
+            if count > 0:
+                cat.slug += "_" + str(count)
             cat.save()
             return category(request, cat.slug)
     else:
