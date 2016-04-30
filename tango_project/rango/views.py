@@ -130,6 +130,8 @@ def add_page(request, category_name_slug):
 
     try:
         cat = Category.objects.get(slug=category_name_slug)
+        if cat.author != request.user:
+                raise Http404("You aren't the author of this category!")
     except Category.DoesNotExist:
                 # cat = None
                 return HttpResponse('This page does not exist! (You should pass existing url of category, but you pass '
@@ -247,6 +249,8 @@ def auto_add_page(request):
         title = request.GET['title']
         if cat_id:
             category = Category.objects.get(id=int(cat_id))
+            if category.author != request.user:
+                raise Http404("You aren't the author of this category!")
             context_dict['created'] = Page.objects.get_or_create(category=category, title=title, url=url)[1]
 
             pages = Page.objects.filter(category=category).order_by('-views')
