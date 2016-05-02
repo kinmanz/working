@@ -219,8 +219,8 @@ def change_page(request):
         catid = request.GET['cat_id']
         page_id = request.GET['page_id']
 
-        if len(information) > 100 or information == "":
-            errors.append("Please make information with length less than 100 characters and not empty.")
+        if len(information) > 200 or information == "":
+            errors.append("Please make information with length less than 200 characters and not empty.")
         cat = Category.objects.filter(id=catid)
         page = Page.objects.filter(id=page_id, category=cat)
         if cat.count() > 0 and page.count() > 0 and len(errors) == 0:

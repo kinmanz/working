@@ -1,31 +1,94 @@
 {% extends 'rango/base.html' %}
 
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %}Add page{% endblock %}
 
 
 {% block body_block %}
-        {% if category %}
-                <form role="form"  id="page_form" method="post" action="{% url 'add_page' category.slug %}">
-                <h2 class="form-signin-heading">Add a Page to <a href="{% url 'category' category.slug %}">{{ category.name }}</a></h2>
-                        {% csrf_token %}
-                        {% for hidden in form.hidden_fields %}
-                            {{ hidden }}
-                        {% endfor %}
+{% if category %}
+        <div class="page-header">
+                <h3>User <small>{{ user.username }}</small> :: Category <small><a href="{% url 'category' category.slug %}"> {{category.name}}</a></small> :: Add <small>Page</small></h3>
+        </div>
 
-                        {% for field in form.visible_fields %}
-                            {{ field.errors }}
-                            {{ field.help_text }}<br/>
-                            {{ field }}<br/>
-                        {% endfor %}
-                    <br/>
-                <button class="btn btn-primary" type="submit" name="submit">
-                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                    Add Page</button>
-                    </form>
-                {%  else %}
+        <ul class="list-group">
+        {% for error in errors %}
+              <li class= "list-group-item list-group-item-danger">  {{ error }}</li>
+        {% endfor %}
+        </ul>
+
+        <form class="form-horizontal" id="category_form" method="post" action="{% url 'add_page' category.slug %}">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for error in form.non_field_errors %}
+                    <div class="fieldWrapper">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+              {% for field in form %}
+                    <div class="fieldWrapper">
+                        {{ field.errors }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <input id="id_views" name="views" type="hidden" value="0" />
+
+
+            <!--Please enter the title of the page.<br/>-->
+            <!--<input id="id_title" maxlength="128" name="title" type="text" /><br/>-->
+
+
+            <!--Please enter the URL of the page.<br/>-->
+            <!--<input id="id_url" maxlength="200" name="url" type="url" /><br/>-->
+
+            <!--<br/>-->
+            <!--<input id="id_information" maxlength="200" name="information" type="text" /><br/>-->
+
+          <div class="form-group">
+            <label for="id_title" class="col-sm-2 control-label">Name: </label>
+            <div class="col-sm-10">
+              <input type="text" id="id_title" maxlength="128" minlength="3" class="form-control" name="title" placeholder="Page name">
+            </div>
+          </div>
+            <div class="form-group">
+            <label for="id_url" class="col-sm-2 control-label">Url: </label>
+            <div class="col-sm-10">
+              <input type="url" id="id_url" class="form-control" name="url" placeholder="Page URL">
+            </div>
+          </div>
+            <div class="form-group">
+            <label for="id_information" class="col-sm-2 control-label">Information: </label>
+            <div class="col-sm-10">
+              <textarea class="form-control" name="information" rows="2" id="id_information" maxlength="200" placeholder="Page description"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn-primary btn">
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                  Make</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="alert alert-warning" role="alert">
+
+<span class="helptext">
+  <ul>
+      <li><strong>Page URL</strong> should be <strong>NOT HTTPS!</strong></li>
+      <li><strong>Page name</strong> should be simple.(Less than 128 characters, but more than 3.)</li>
+    <li><strong>Page information</strong> should be also simple.(Less than 200 characters.)</li>
+  </ul>
+</span>
+</div>
+{%  else %}
                 <p>This is category does not exist.</p>
-            {%  endif %}
-
+{%  endif %}
 {% endblock %}
