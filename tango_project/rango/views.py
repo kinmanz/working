@@ -10,7 +10,7 @@ from datetime import datetime
 from .bing_search import run_query
 from .my_random_generate import generate
 from django.template.defaultfilters import slugify
-
+from django.utils.html import escape
 
 
 def my_image(request):
@@ -179,6 +179,7 @@ def search(request):
 
     return render(request, 'rango/search.html', {'result_list': result_list})
 
+
 @login_required
 def change_category(request):
     errors = []
@@ -192,12 +193,47 @@ def change_category(request):
         if cat.count() > 0 and len(errors)==0:
             cat = cat[0]
             if cat.author == request.user:
+                information = escape(information)
                 cat.information = information
                 cat.save()
             else:
                 errors.append("Who are you?")
         else:
             errors.append("This category doesn't exist")
+
+        if len(errors) == 0:
+            return HttpResponse("ok")
+
+    else:
+        errors.append("Please, use form.")
+
+    return HttpResponse(errors[0])
+
+
+
+@login_required
+def change_page(request):
+    errors = []
+    if request.method == 'GET':
+        information = request.GET['information']
+        catid = request.GET['cat_id']
+        page_id = request.GET['page_id']
+
+        if len(information) > 100 or information == "":
+            errors.append("Please make information with length less than 100 characters and not empty.")
+        cat = Category.objects.filter(id=catid)
+        page = Page.objects.filter(id=page_id, category=cat)
+        if cat.count() > 0 and page.count() > 0 and len(errors) == 0:
+            cat = cat[0]
+            page = page[0]
+            if cat.author == request.user:
+                information = escape(information)
+                page.information = information
+                page.save()
+            else:
+                errors.append("Who are you?")
+        else:
+            errors.append("This page or category doesn't exist. Are you hacker?")
 
         if len(errors) == 0:
             return HttpResponse("ok")
@@ -221,6 +257,7 @@ def add_category(request):
             errors.append("This name already is used.")
 
         if len(errors) == 0:
+            information = escape(information)
             cat = Category(name=name, author=request.user, information=information)
             count = Category.objects.filter(slug=slugify(name)).count()
             cat.save()

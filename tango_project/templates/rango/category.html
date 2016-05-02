@@ -19,6 +19,7 @@
 
             <p><strong>Information:</strong>
                 <span id = "cat-info">
+                    
                {{ category.information }}
               </span></p>
 
@@ -168,7 +169,41 @@
                             <small>{{ page.last_visit }}</small>
                             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                         </p>
+                    {% endif %}
+                    {% if page.information %}
+                    <div id = "page-info{{page.id}}" class = "well well-sm">
                         {{ page.information }}
+                    </div>
+                    {% else %}
+                    <div id = "page-info{{page.id}}">
+                    </div>
+                    {% endif %}
+
+                    {% if user == category.author %}
+                    <p class="text-right">
+                        <button class="page-change-bth btn" data-pageid="{{page.id}}" id="change-bth{{page.id}}">
+                                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                   Change
+                        </button>
+                    </p>
+                    <div id = "change-form-page{{page.id}}" style="display: none">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                            <label for="change_information" class="col-sm-2 control-label">Information: </label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" name="information" rows="2" id="change_information_page{{page.id}}" minlength="2" maxlength="100" placeholder="Page description"></textarea>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                              <button class = "change-bth-page btn" data-pageid="{{page.id}}" data-catid="{{category.id}}">
+                                  <span class="glyphicon glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                   Save</button>
+                            </div>
+                          </div>
+                          </div>
+                    </div>
                     {% endif %}
                 </li>
                 {% endfor %}

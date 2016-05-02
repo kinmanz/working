@@ -73,6 +73,7 @@ $(document).ready( function() {
         var me = $(this);
         var inf = $("#change_information").val();
         var catid = $(this).attr("data-catid");
+
         $.get('/rank/change_category/', {cat_id: catid, information: inf}, function(data){
                     if (data == "ok" )
                     {
@@ -85,6 +86,37 @@ $(document).ready( function() {
                     }
                         });
                         });
+
+    $(".page-change-bth").click(function(){
+        var me = $(this);
+        //var info = $('#lock-info');
+         me.hide();
+        var pageid = me.attr("data-pageid");
+        $("#change-form-page" + pageid).show();
+    });
+
+     $(".change-bth-page").click(function() {
+         var me = $(this);
+         var page_id = me.attr("data-pageid");
+         var cat_id = me.attr("data-catid");
+
+         var cur_selector = "change-form-page" + page_id;
+
+         var inf = $("#" + "change_information_page" + page_id).val();
+         $.get('/rank/change_page/', {page_id: page_id, cat_id: cat_id, information: inf}, function(data){
+                    if (data == "ok" )
+                    {
+                        $("#page-info" + page_id).html(inf);
+                        $("#" + cur_selector).hide();
+                        $("#change-bth" + page_id).show();
+                        $("#page-info" + page_id).addClass("well well-sm");
+
+                    } else {
+                        $("#" + "change_information_page" + page_id).attr("placeholder", data);
+                    }
+                        });
+     });
+
 });
 
 
