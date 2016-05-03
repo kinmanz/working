@@ -3,15 +3,62 @@
         <strong>This page</strong> present in database.
     </div>
 {% endif %}
-<ul class="list-group">
-    {% for page in pages %}
-    <li class="list-group-item">
-        <a href="{% url 'goto'%}?page_id={{page.id}}">{{ page.title }}</a>
-        {% if page.views > 1 %}
-            <span class="badge">{{ page.views }} views</span>
-        {% elif page.views == 1 %}
-            <span class="badge">{{ page.views }} view</span>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
+{% if pages %}
+            <ul class="list-group">
+                {% for page in pages %}
+                <li class="list-group-item" id = "list-group-item{{page.id}}">
+                    <a href="{% url 'goto'%}?page_id={{page.id}}"><strong>{{ page.title }}</strong></a>
+                    {% if page.views > 0 %}
+                        {% if page.views > 1 %}
+                            <span class="badge">{{ page.views }} views</span>
+                        {% elif page.views == 1 %}
+                            <span class="badge">{{ page.views }} view</span>
+                    {% endif %}
+                    <p class="text-right">
+                            <small>{{ page.last_visit }}</small>
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        </p>
+                    {% endif %}
+                    {% if page.information %}
+                    <div id = "page-info{{page.id}}" class = "well well-sm">
+                        {{ page.information }}
+                    </div>
+                    {% else %}
+                    <div id = "page-info{{page.id}}">
+                    </div>
+                    {% endif %}
+
+                    {% if user == category.author %}
+
+                    <p class="text-right">
+                        <button class="page-change-bth btn" data-pageid="{{page.id}}" id="change-bth{{page.id}}">
+                                  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                   Change
+                        </button>
+                    </p>
+                    <div id = "change-form-page{{page.id}}" style="display: none">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                            <label for="change_information_page{{page.id}}" class="col-sm-2 control-label">Information: </label>
+                            <div class="col-sm-10">
+                              <textarea class="form-control" name="information" rows="2" id="change_information_page{{page.id}}" minlength="2" maxlength="200" placeholder="Page description"></textarea>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                              <button class = "change-bth-page btn" data-pageid="{{page.id}}" data-catid="{{category.id}}">
+                                  <span class="glyphicon glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                   Save</button>
+                            </div>
+                          </div>
+                          </div>
+                    </div>
+                    <span data-id = "{{page.id}}" class = "delete-page"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>No pages currently in category.</strong>
+            {% endif %}

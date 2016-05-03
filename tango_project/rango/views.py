@@ -210,7 +210,6 @@ def change_category(request):
     return HttpResponse(errors[0])
 
 
-
 @login_required
 def change_page(request):
     errors = []
@@ -242,6 +241,20 @@ def change_page(request):
         errors.append("Please, use form.")
 
     return HttpResponse(errors[0])
+
+
+@login_required
+def delete_page(request):
+    if request.method == 'GET':
+        page_id = request.GET['page_id']
+        page = Page.objects.filter(id = page_id)[0]
+        if page.category.author == request.user:
+            page.delete()
+        else:
+            HttpResponse("You are not the owner!")
+        return HttpResponse("ok")
+    else:
+        return HttpResponse("Please use the close button!")
 
 
 @login_required
@@ -284,16 +297,21 @@ def auto_add_page(request):
         cat_id = request.GET['category_id']
         url = request.GET['url']
         title = request.GET['title']
+        info = request.GET['information']
         if cat_id:
             category = Category.objects.get(id=int(cat_id))
             if category.author != request.user:
                 raise Http404("You aren't the author of this category!")
-            context_dict['created'] = Page.objects.get_or_create(category=category, title=title, url=url)[1]
+            # second parameter is boolean value which mean was or not madden new Page
+            page, context_dict['created'] = Page.objects.get_or_create(category=category, title=title, url=url)
+            page.information = escape(info)[:200]
+            page.save()
 
             pages = Page.objects.filter(category=category).order_by('-views')
 
             # Adds our results list to the template context under name pages.
             context_dict['pages'] = pages
+            context_dict['category'] = category
 
     return render(request, 'rango/page_list.html', context_dict)
 

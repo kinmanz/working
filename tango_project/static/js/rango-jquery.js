@@ -39,8 +39,9 @@ $(document).ready( function() {
     var catid = $(this).attr("data-catid");
         var url = $(this).attr("data-url");
         var title = $(this).attr("data-title");
+        var info = $(this).attr("data-info");
         var me = $(this);
-        $.get('/rank/auto_add_page/', {category_id: catid, url: url, title: title}, function(data){
+        $.get('/rank/auto_add_page/', {category_id: catid, url: url, title: title, information : info }, function(data){
                         $('#pages').html(data);
                         me.hide();
                         });
@@ -117,6 +118,21 @@ $(document).ready( function() {
                         });
      });
 
+    $(".delete-page").click(function() {
+         var me = $(this);
+         var page_id = me.attr("data-id");
+         var page_li = $("#list-group-item" + page_id)
+
+    $.get('/rank/delete_page/', {page_id: page_id}, function(data){
+                    if (data == "ok" )
+                    {
+                        page_li.hide();
+
+                    } else {
+                        alert(data);
+                    }
+                        });
+        });
 });
 
 
