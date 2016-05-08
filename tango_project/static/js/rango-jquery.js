@@ -35,18 +35,28 @@ $(document).ready( function() {
 //               $('#likes').hide();
 //    });
 //});
-    $('.rango-add').click(function(){
-    var catid = $(this).attr("data-catid");
+    $(document).on('click', '.rango-add', function() {
+        var catid = $(this).attr("data-catid");
         var url = $(this).attr("data-url");
         var title = $(this).attr("data-title");
         var info = $(this).attr("data-info");
         var me = $(this);
         $.get('/rank/auto_add_page/', {category_id: catid, url: url, title: title, information : info }, function(data){
                         $('#pages').html(data);
-                        me.hide();
-                        });
+                        me.hide();});
+    //$('.rango-add').click(function(){
+    //var catid = $(this).attr("data-catid");
+    //    var url = $(this).attr("data-url");
+    //    var title = $(this).attr("data-title");
+    //    var info = $(this).attr("data-info");
+    //    var me = $(this);
+    //    $.get('/rank/auto_add_page/', {category_id: catid, url: url, title: title, information : info }, function(data){
+    //                    $('#pages').html(data);
+    //                    me.hide();
+    //                    });
                                 });
-    $(".lock-btn").click(function(){
+    $(document).on('click', '.lock-btn', function() {
+    //$(".lock-btn").click(function(){
         var me = $(this);
         var catid = $(this).attr("data-catid");
         $.get('/rank/lock/', {category_id: catid}, function(data){
@@ -60,7 +70,8 @@ $(document).ready( function() {
                         });
                                 });
 
-    $(".rank-change").click(function(){
+    $(document).on('click', '.rank-change', function() {
+    //$(".rank-change").click(function(){
         var me = $(this);
         //var info = $('#lock-info');
          $(this).hide();
@@ -69,7 +80,8 @@ $(document).ready( function() {
 
                         });
 
-    $("#change-bth").click(function(){
+    $(document).on('click', '#change-bth', function() {
+    //$("#change-bth").click(function(){
         $('#change-form').show();
         var me = $(this);
         var inf = $("#change_information").val();
@@ -87,8 +99,8 @@ $(document).ready( function() {
                     }
                         });
                         });
-
-    $(".page-change-bth").click(function(){
+    $(document).on('click', '.page-change-bth', function() {
+        //alert("Test!!!");
         var me = $(this);
         //var info = $('#lock-info');
          me.hide();
@@ -96,7 +108,17 @@ $(document).ready( function() {
         $("#change-form-page" + pageid).show();
     });
 
-     $(".change-bth-page").click(function() {
+    //$(".page-change-bth").click(function(){
+    //    //alert("Test!!!");
+    //    var me = $(this);
+    //    //var info = $('#lock-info');
+    //     me.hide();
+    //    var pageid = me.attr("data-pageid");
+    //    $("#change-form-page" + pageid).show();
+    //});
+
+    $(document).on('click', '.change-bth-page', function() {
+     //$(".change-bth-page").click(function() {
          var me = $(this);
          var page_id = me.attr("data-pageid");
          var cat_id = me.attr("data-catid");
@@ -118,7 +140,8 @@ $(document).ready( function() {
                         });
      });
 
-    $(".delete-page").click(function() {
+    $(document).on('click', '.delete-page', function() {
+    //$(".delete-page").click(function() {
          var me = $(this);
          var page_id = me.attr("data-id");
          var page_li = $("#list-group-item" + page_id);
@@ -134,7 +157,8 @@ $(document).ready( function() {
                         });
         });
 
-    $(".hide-bth-page").click(function() {
+    $(document).on('click', '.hide-bth-page', function() {
+    //$(".hide-bth-page").click(function() {
          var me = $(this);
          var pageid = me.attr("data-pageid");
         $("#change-form-page" + pageid).hide();
