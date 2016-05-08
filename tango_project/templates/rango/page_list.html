@@ -47,13 +47,25 @@
 
                           <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                              <button class = "change-bth-page btn" data-pageid="{{page.id}}" data-catid="{{category.id}}">
+                              <!--<button class = "change-bth-page btn" data-pageid="{{page.id}}" data-catid="{{category.id}}">-->
+                                  <!--<span class="glyphicon glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>-->
+                                   <!--Save</button>-->
+
+                                   <div class="btn-group" role="group" aria-label="...">
+                              <button class = "change-bth-page btn btn-default" data-pageid="{{page.id}}" data-catid="{{category.id}}">
                                   <span class="glyphicon glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                                    Save</button>
+                              <button class = "hide-bth-page btn btn-default" data-pageid="{{page.id}}">
+                                  <span class="glyphicon glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                                   Hide</button>
+                            </div>
+
+
                             </div>
                           </div>
                           </div>
                     </div>
+
                     <span data-id = "{{page.id}}" class = "delete-page"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
                     {% endif %}
                 </li>

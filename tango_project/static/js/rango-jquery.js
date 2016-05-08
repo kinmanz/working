@@ -121,7 +121,7 @@ $(document).ready( function() {
     $(".delete-page").click(function() {
          var me = $(this);
          var page_id = me.attr("data-id");
-         var page_li = $("#list-group-item" + page_id)
+         var page_li = $("#list-group-item" + page_id);
 
     $.get('/rank/delete_page/', {page_id: page_id}, function(data){
                     if (data == "ok" )
@@ -132,6 +132,14 @@ $(document).ready( function() {
                         alert(data);
                     }
                         });
+        });
+
+    $(".hide-bth-page").click(function() {
+         var me = $(this);
+         var pageid = me.attr("data-pageid");
+        $("#change-form-page" + pageid).hide();
+        $("#change-bth" + pageid).show();
+
         });
 });
 
