@@ -511,7 +511,7 @@ def register_profile(request):
 
     else:
         if UserProfile.objects.filter(user=request.user).count() == 0:
-            UserProfile(user=request.user).save()
+            UserProfile(user=request.user, picture="no-avatar-male.jpg ").save()
         profile_form = UserProfileForm()
 
     return render(request, 'rango/profile_registration.html', {'profile_form': profile_form})
