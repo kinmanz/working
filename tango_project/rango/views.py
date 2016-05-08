@@ -264,7 +264,7 @@ def add_category(request):
         name = request.POST['name']
         information = request.POST['information']
 
-        if len(name) < 3 or len(name) > 20: errors.append("Please make name with length less than 128 characters.")
+        if len(name) < 3 or len(name) > 20: errors.append("Please make name with length less than 128 and more than 2 characters.")
         if len(information) > 1000: errors.append("Please make information with length less than 1000 characters.")
         if Category.objects.filter(name=name).count() > 0:
             errors.append("This name already is used.")
@@ -312,6 +312,7 @@ def auto_add_page(request):
             # Adds our results list to the template context under name pages.
             context_dict['pages'] = pages
             context_dict['category'] = category
+            context_dict['category_name'] = category.name
 
     return render(request, 'rango/page_list.html', context_dict)
 
@@ -509,6 +510,8 @@ def register_profile(request):
             print(profile_form.errors)
 
     else:
+        if UserProfile.objects.filter(user=request.user).count() == 0:
+            UserProfile(user=request.user).save()
         profile_form = UserProfileForm()
 
     return render(request, 'rango/profile_registration.html', {'profile_form': profile_form})
